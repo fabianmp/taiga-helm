@@ -1,0 +1,43 @@
+{{- if .Values.ingress.enabled -}}
+{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- else -}}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ include "taiga.fullname" . }}
+  labels:
+    {{- include "taiga.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.ingress.tls.enabled }}
+  tls:
+    - hosts:
+        - {{ .Values.ingress.tls.host | quote }}
+      secretName: {{ .Values.ingress.tls.secretName }}
+  {{- end }}
+  rules:
+    - host: {{ .Values.ingress.host | quote }}
+      http:
+        paths:
+          - path: /api
+            backend:
+              serviceName: {{ include "taiga.fullname" . }}
+              servicePort: {{ .Values.service.ports.backend }}
+          - path: /admin
+            backend:
+              serviceName: {{ include "taiga.fullname" . }}
+              servicePort: {{ .Values.service.ports.backend }}
+          - path: /events
+            backend:
+              serviceName: {{ include "taiga.fullname" . }}
+              servicePort: {{ .Values.service.ports.events }}
+          - path: /
+            backend:
+              serviceName: {{ include "taiga.fullname" . }}
+              servicePort: {{ .Values.service.ports.frontend }}
+  {{- end }}

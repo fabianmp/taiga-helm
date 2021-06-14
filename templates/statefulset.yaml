@@ -1,0 +1,181 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "taiga.fullname" . }}
+  labels:
+    {{- include "taiga.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "taiga.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "taiga.fullname" . }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "taiga.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "taiga.serviceAccountName" . }}
+      containers:
+        - name: backend
+          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.backend.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ include "taiga.fullname" . }}-database-credentials
+            - secretRef:
+                name: {{ include "taiga.fullname" . }}-broker-credentials
+            - secretRef:
+                name: {{ include "taiga.fullname" . }}-taiga-env-vars
+          env:
+            - name: ENABLE_TELEMETRY
+              value: "False"
+            - name: POSTGRES_HOST
+              value: {{ include "taiga.fullname" . }}-postgresql
+            - name: TAIGA_SITES_DOMAIN
+              value: {{ .Values.ingress.host | quote }}
+            - name: SESSION_COOKIE_SECURE
+              value: "False"
+            - name: CSRF_COOKIE_SECURE
+              value: "False"
+            {{- if .Values.ingress.tls.enabled }}
+            - name: TAIGA_SITES_SCHEME
+              value: "https"
+            {{- else }}
+            - name: TAIGA_SITES_SCHEME
+              value: "http"
+            {{- end }}
+          {{- if .Values.persistence.enabled }}
+          volumeMounts:
+            - name: static
+              mountPath: /taiga-back/static
+            - name: media
+              mountPath: /taiga-back/media
+          {{- end }}
+          ports:
+            - name: api
+              containerPort: 8000
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.backend.resources | nindent 12 }}
+        - name: async
+          image: "{{ .Values.async.image.repository }}:{{ .Values.async.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.async.image.pullPolicy }}
+          command: [ "/taiga-back/docker/async_entrypoint.sh" ]
+          envFrom:
+            - secretRef:
+                name: {{ include "taiga.fullname" . }}-database-credentials
+            - secretRef:
+                name: {{ include "taiga.fullname" . }}-broker-credentials
+            - secretRef:
+                name: {{ include "taiga.fullname" . }}-taiga-env-vars
+          env:
+            - name: ENABLE_TELEMETRY
+              value: "False"
+            - name: POSTGRES_HOST
+              value: {{ include "taiga.fullname" . }}-postgresql
+            {{- if .Values.ingress.tls.enabled }}
+            - name: TAIGA_SITES_SCHEME
+              value: "https"
+            {{- else }}
+            - name: TAIGA_SITES_SCHEME
+              value: "http"
+            {{- end }}
+          {{- if .Values.persistence.enabled }}
+          volumeMounts:
+            - name: static
+              mountPath: /taiga-back/static
+            - name: media
+              mountPath: /taiga-back/media
+          {{- end }}
+          resources:
+            {{- toYaml .Values.async.resources | nindent 12 }}
+        - name: frontend
+          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
+          env:
+            {{- if .Values.ingress.tls.enabled }}
+            - name: TAIGA_URL
+              value: "https://{{ .Values.ingress.host }}"
+            - name: TAIGA_WEBSOCKETS_URL
+              value: "wss://{{ .Values.ingress.host }}"
+            {{- else }}
+            - name: TAIGA_URL
+              value: "http://{{ .Values.ingress.host }}"
+            - name: TAIGA_WEBSOCKETS_URL
+              value: "ws://{{ .Values.ingress.host }}"
+            {{- end }}
+          {{- if .Values.persistence.enabled }}
+          volumeMounts:
+            - name: static
+              mountPath: /usr/share/nginx/html/static
+            - name: media
+              mountPath: /usr/share/nginx/html/media
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.frontend.resources | nindent 12 }}
+        - name: events
+          image: "{{ .Values.events.image.repository }}:{{ .Values.events.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.events.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ include "taiga.fullname" . }}-broker-credentials
+            - secretRef:
+                name: {{ include "taiga.fullname" . }}-taiga-env-vars
+          ports:
+            - name: events
+              containerPort: 8888
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.events.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  {{- if .Values.persistence.enabled }}
+  volumeClaimTemplates:
+    - metadata:
+        name: static
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: {{ .Values.persistence.static.size }}
+        storageClassName: {{ .Values.persistence.static.storageClass }}
+    - metadata:
+        name: media
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: {{ .Values.persistence.media.size }}
+        storageClassName: {{ .Values.persistence.media.storageClass }}
+  {{- end }}

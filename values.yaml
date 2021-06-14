@@ -1,0 +1,146 @@
+# Default values for taiga.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Image pull secrets for Taiga pod
+imagePullSecrets: []
+
+# -- Override name of this release
+nameOverride: ""
+
+# -- Override full name of this release
+fullnameOverride: ""
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# -- Annotations to be added to the Taiga pod
+podAnnotations: {}
+
+# -- Secret key used for cryptographic signing in Taiga
+secretKey: taiga-secret-key
+
+# -- Number of replicas
+replicaCount: 1
+
+backend:
+  image:
+    # -- Taiga backend image
+    repository: taigaio/taiga-back
+    # -- Taiga backend pull policy
+    pullPolicy: IfNotPresent
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  # -- Resources for backend container
+  resources: {}
+
+frontend:
+  image:
+    # -- Taiga frontend image
+    repository: taigaio/taiga-front
+    # -- Taiga frontend pull policy
+    pullPolicy: IfNotPresent
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  # -- Resources for frontend container
+  resources: {}
+
+events:
+  image:
+    # -- Taiga events image
+    repository: taigaio/taiga-events
+    # -- Taiga events pull policy
+    pullPolicy: IfNotPresent
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  # -- Resources for events container
+  resources: {}
+
+async:
+  image:
+    # -- Taiga async image
+    repository: taigaio/taiga-back
+    # -- Taiga async pull policy
+    pullPolicy: IfNotPresent
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  # -- Resources for async container
+  resources: {}
+
+service:
+  # -- Service type for Taiga service
+  type: ClusterIP
+  ports:
+    # -- Service port for Taiga frontend
+    frontend: 80
+    # -- Service port for Taiga backend
+    backend: 8000
+    # -- Service port for Taiga events
+    events: 8888
+
+ingress:
+  # -- Enable ingress for Taiga
+  enabled: false
+  # -- Annotations to be added to ingress
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+
+    # -- External hostname for Taiga
+  host: chart-example.local
+  tls:
+    # -- Enable TLS on ingress
+    enabled: false
+    # -- Secret name used for TLS certificate
+    secretName: chart-example-tls
+
+persistence:
+  # -- Enable persistent storage
+  enabled: true
+  static:
+    # -- Size of PVC for static data
+    size: 1Gi
+    # -- Name of storage class for static data PVC
+    storageClass: ""
+  media:
+    # -- Size of PVC for media
+    size: 1Gi
+    # -- Name of storage class for media PVC
+    storageClass: ""
+
+# -- Node selector for Taiga pod
+nodeSelector: {}
+
+# -- Tolerations for Taiga pod
+tolerations: []
+
+# -- Affinity for Taiga pod
+affinity: {}
+
+postgresql:
+  # -- PostgreSQL database name used by Taiga
+  postgresqlDatabase: taiga
+  # -- PostgreSQL user used by Taiga
+  postgresqlUsername: taiga
+  # -- PostgreSQL password used by Taiga
+  postgresqlPassword: taiga
+
+rabbitmq:
+  auth:
+    # -- Erlang cookie
+    erlangCookie: secret-taiga-erlang-cookie
+    # -- RabbitMQ user used by Taiga
+    username: taiga
+    # -- RabbitMQ password used by Taiga
+    password: taiga
+  # -- RabbitMQ virtual host used by Taiga
+  vhost: taiga
+  # -- Extra configuration for RabbitMQ
+  extraConfiguration: |-
+    default_vhost = taiga
