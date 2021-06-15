@@ -24,6 +24,17 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "taiga.serviceAccountName" . }}
+      initContainers:
+        - name: collect-static
+          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.backend.image.pullPolicy }}
+          command: [ "python", "manage.py", "collectstatic" ]
+          envFrom:
+            - secretRef:
+                name: {{ include "taiga.fullname" . }}-taiga-env-vars
+          volumeMounts:
+            - name: taiga-static
+              mountPath: /taiga-back/static
       containers:
         - name: backend
           image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag | default .Chart.AppVersion }}"
@@ -55,7 +66,7 @@ spec:
             {{- end }}
           {{- if .Values.persistence.enabled }}
           volumeMounts:
-            - name: static
+            - name: taiga-static
               mountPath: /taiga-back/static
             - name: media
               mountPath: /taiga-back/media
@@ -91,7 +102,7 @@ spec:
             {{- end }}
           {{- if .Values.persistence.enabled }}
           volumeMounts:
-            - name: static
+            - name: taiga-static
               mountPath: /taiga-back/static
             - name: media
               mountPath: /taiga-back/media
@@ -115,7 +126,7 @@ spec:
             {{- end }}
           {{- if .Values.persistence.enabled }}
           volumeMounts:
-            - name: static
+            - name: taiga-static
               mountPath: /usr/share/nginx/html/static
             - name: media
               mountPath: /usr/share/nginx/html/media
@@ -160,16 +171,11 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: taiga-static
+          emptyDir: {}
   {{- if .Values.persistence.enabled }}
   volumeClaimTemplates:
-    - metadata:
-        name: static
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        resources:
-          requests:
-            storage: {{ .Values.persistence.static.size }}
-        storageClassName: {{ .Values.persistence.static.storageClass }}
     - metadata:
         name: media
       spec:
