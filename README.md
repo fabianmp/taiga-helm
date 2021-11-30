@@ -1,6 +1,6 @@
 # taiga
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.2.0](https://img.shields.io/badge/AppVersion-6.2.0-informational?style=flat-square)
+![Version: 0.2.2](https://img.shields.io/badge/Version-0.2.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.4.2](https://img.shields.io/badge/AppVersion-6.4.2-informational?style=flat-square)
 
 A Helm chart for Taiga
 
@@ -20,8 +20,8 @@ A Helm chart for Taiga
 
 | Repository | Name | Version |
 |------------|------|---------|
-| @bitnami | postgresql | 8.6.2 |
-| @bitnami | rabbitmq | 8.15.2 |
+| https://charts.bitnami.com/bitnami | postgresql | 8.6.2 |
+| https://charts.bitnami.com/bitnami | rabbitmq | 8.15.2 |
 
 ## Values
 
@@ -38,7 +38,7 @@ A Helm chart for Taiga
 | backend.resources | object | `{}` | Resources for backend container |
 | events.image.pullPolicy | string | `"IfNotPresent"` | Taiga events pull policy |
 | events.image.repository | string | `"taigaio/taiga-events"` | Taiga events image |
-| events.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| events.image.tag | string | `"6.4.0"` | Overrides the image tag whose default is the chart appVersion. |
 | events.resources | object | `{}` | Resources for events container |
 | frontend.image.pullPolicy | string | `"IfNotPresent"` | Taiga frontend pull policy |
 | frontend.image.repository | string | `"taigaio/taiga-front"` | Taiga frontend image |
