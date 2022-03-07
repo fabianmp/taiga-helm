@@ -1,9 +1,5 @@
 {{- if .Values.ingress.enabled -}}
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
-{{- else -}}
-apiVersion: extensions/v1beta1
-{{- end }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ include "taiga.fullname" . }}
@@ -25,19 +21,31 @@ spec:
       http:
         paths:
           - path: /api
+            pathType: Prefix
             backend:
-              serviceName: {{ include "taiga.fullname" . }}
-              servicePort: {{ .Values.service.ports.backend }}
+              service:
+                name: {{ include "taiga.fullname" . }}
+                port:
+                  number: {{ .Values.service.ports.backend }}
           - path: /admin
+            pathType: Prefix
             backend:
-              serviceName: {{ include "taiga.fullname" . }}
-              servicePort: {{ .Values.service.ports.backend }}
+              service:
+                name: {{ include "taiga.fullname" . }}
+                port:
+                  number: {{ .Values.service.ports.backend }}
           - path: /events
+            pathType: Prefix
             backend:
-              serviceName: {{ include "taiga.fullname" . }}
-              servicePort: {{ .Values.service.ports.events }}
+              service:
+                name: {{ include "taiga.fullname" . }}
+                port:
+                  number: {{ .Values.service.ports.events }}
           - path: /
+            pathType: Prefix
             backend:
-              serviceName: {{ include "taiga.fullname" . }}
-              servicePort: {{ .Values.service.ports.frontend }}
+              service:
+                name: {{ include "taiga.fullname" . }}
+                port:
+                  number: {{ .Values.service.ports.frontend }}
   {{- end }}
