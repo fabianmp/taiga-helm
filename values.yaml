@@ -73,6 +73,9 @@ async:
   # -- Resources for async container
   resources: {}
 
+# -- Extra environment variables for Taiga containers
+extraEnv: {}
+
 service:
   # -- Service type for Taiga service
   type: ClusterIP

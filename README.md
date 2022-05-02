@@ -1,6 +1,6 @@
 # taiga
 
-![Version: 0.2.2](https://img.shields.io/badge/Version-0.2.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.4.2](https://img.shields.io/badge/AppVersion-6.4.2-informational?style=flat-square)
+![Version: 0.2.4](https://img.shields.io/badge/Version-0.2.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.4.2](https://img.shields.io/badge/AppVersion-6.4.2-informational?style=flat-square)
 
 A Helm chart for Taiga
 
@@ -10,7 +10,7 @@ A Helm chart for Taiga
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| Fabian Zach | fabian.zach@methodpark.de | https://github.com/fabianmp |
+| Fabian Zach | <fabian.zach@methodpark.de> | <https://github.com/fabianmp> |
 
 ## Source Code
 
@@ -40,6 +40,7 @@ A Helm chart for Taiga
 | events.image.repository | string | `"taigaio/taiga-events"` | Taiga events image |
 | events.image.tag | string | `"6.4.0"` | Overrides the image tag whose default is the chart appVersion. |
 | events.resources | object | `{}` | Resources for events container |
+| extraEnv | object | `{}` | Extra environment variables for Taiga containers |
 | frontend.image.pullPolicy | string | `"IfNotPresent"` | Taiga frontend pull policy |
 | frontend.image.repository | string | `"taigaio/taiga-front"` | Taiga frontend image |
 | frontend.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
