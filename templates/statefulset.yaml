@@ -115,6 +115,9 @@ spec:
         - name: frontend
           image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ include "taiga.fullname" . }}-taiga-env-vars
           env:
             {{- if .Values.ingress.tls.enabled }}
             - name: TAIGA_URL
