@@ -12,8 +12,11 @@ spec:
   serviceName: {{ include "taiga.fullname" . }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/secret-taiga.yaml") . | sha256sum }}
+        checksum/broker: {{ include (print $.Template.BasePath "/secret-broker-credentials.yaml") . | sha256sum }}
+        checksum/database: {{ include (print $.Template.BasePath "/secret-database-credentials.yaml") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
