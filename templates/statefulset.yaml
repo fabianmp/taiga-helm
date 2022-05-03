@@ -13,7 +13,9 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/secret-taiga.yaml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/secret-taiga-common.yaml") . | sha256sum }}
+        checksum/frontend: {{ include (print $.Template.BasePath "/secret-taiga-frontend.yaml") . | sha256sum }}
+        checksum/backend: {{ include (print $.Template.BasePath "/secret-taiga-backend.yaml") . | sha256sum }}
         checksum/broker: {{ include (print $.Template.BasePath "/secret-broker-credentials.yaml") . | sha256sum }}
         checksum/database: {{ include (print $.Template.BasePath "/secret-database-credentials.yaml") . | sha256sum }}
       {{- with .Values.podAnnotations }}
@@ -49,6 +51,8 @@ spec:
                 name: {{ include "taiga.fullname" . }}-broker-credentials
             - secretRef:
                 name: {{ include "taiga.fullname" . }}-taiga-env-vars
+            - secretRef:
+                name: {{ include "taiga.fullname" . }}-taiga-backend-env-vars
           env:
             - name: ENABLE_TELEMETRY
               value: "False"
@@ -91,6 +95,8 @@ spec:
                 name: {{ include "taiga.fullname" . }}-broker-credentials
             - secretRef:
                 name: {{ include "taiga.fullname" . }}-taiga-env-vars
+            - secretRef:
+                name: {{ include "taiga.fullname" . }}-taiga-backend-env-vars
           env:
             - name: ENABLE_TELEMETRY
               value: "False"
@@ -117,7 +123,7 @@ spec:
           imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
           envFrom:
             - secretRef:
-                name: {{ include "taiga.fullname" . }}-taiga-env-vars
+                name: {{ include "taiga.fullname" . }}-taiga-frontend-env-vars
           env:
             {{- if .Values.ingress.tls.enabled }}
             - name: TAIGA_URL

@@ -39,6 +39,8 @@ backend:
     tag: ""
   # -- Resources for backend container
   resources: {}
+  # -- Extra environment variables for Taiga backend
+  extraEnv: {}
 
 frontend:
   image:
@@ -50,6 +52,8 @@ frontend:
     tag: ""
   # -- Resources for frontend container
   resources: {}
+  # -- Extra environment variables for Taiga frontend
+  extraEnv: {}
 
 events:
   image:

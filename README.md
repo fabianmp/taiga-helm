@@ -1,6 +1,6 @@
 # taiga
 
-![Version: 0.2.6](https://img.shields.io/badge/Version-0.2.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.4.2](https://img.shields.io/badge/AppVersion-6.4.2-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.4.2](https://img.shields.io/badge/AppVersion-6.4.2-informational?style=flat-square)
 
 A Helm chart for Taiga
 
@@ -32,6 +32,7 @@ A Helm chart for Taiga
 | async.image.repository | string | `"taigaio/taiga-back"` | Taiga async image |
 | async.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | async.resources | object | `{}` | Resources for async container |
+| backend.extraEnv | object | `{}` | Extra environment variables for Taiga backend |
 | backend.image.pullPolicy | string | `"IfNotPresent"` | Taiga backend pull policy |
 | backend.image.repository | string | `"taigaio/taiga-back"` | Taiga backend image |
 | backend.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
@@ -41,6 +42,7 @@ A Helm chart for Taiga
 | events.image.tag | string | `"6.4.0"` | Overrides the image tag whose default is the chart appVersion. |
 | events.resources | object | `{}` | Resources for events container |
 | extraEnv | object | `{}` | Extra environment variables for Taiga containers |
+| frontend.extraEnv | object | `{}` | Extra environment variables for Taiga frontend |
 | frontend.image.pullPolicy | string | `"IfNotPresent"` | Taiga frontend pull policy |
 | frontend.image.repository | string | `"taigaio/taiga-front"` | Taiga frontend image |
 | frontend.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
