@@ -62,7 +62,7 @@ events:
     # -- Taiga events pull policy
     pullPolicy: IfNotPresent
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "6.4.0"
+    tag: ""
   # -- Resources for events container
   resources: {}
 
