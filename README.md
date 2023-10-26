@@ -1,6 +1,6 @@
 # taiga
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.4.2](https://img.shields.io/badge/AppVersion-6.4.2-informational?style=flat-square)
+![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.7.0](https://img.shields.io/badge/AppVersion-6.7.0-informational?style=flat-square)
 
 A Helm chart for Taiga
 
@@ -20,8 +20,8 @@ A Helm chart for Taiga
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | postgresql | 8.6.2 |
-| https://charts.bitnami.com/bitnami | rabbitmq | 8.15.2 |
+| https://charts.bitnami.com/bitnami | postgresql | 13.1.5 |
+| https://charts.bitnami.com/bitnami | rabbitmq | 12.2.5 |
 
 ## Values
 
@@ -62,9 +62,9 @@ A Helm chart for Taiga
 | persistence.static.size | string | `"1Gi"` | Size of PVC for static data |
 | persistence.static.storageClass | string | `""` | Name of storage class for static data PVC |
 | podAnnotations | object | `{}` | Annotations to be added to the Taiga pod |
-| postgresql.postgresqlDatabase | string | `"taiga"` | PostgreSQL database name used by Taiga |
-| postgresql.postgresqlPassword | string | `"taiga"` | PostgreSQL password used by Taiga |
-| postgresql.postgresqlUsername | string | `"taiga"` | PostgreSQL user used by Taiga |
+| postgresql.auth.database | string | `"taiga"` | PostgreSQL database name used by Taiga |
+| postgresql.auth.password | string | `"taiga"` | PostgreSQL password used by Taiga |
+| postgresql.auth.username | string | `"taiga"` | PostgreSQL user used by Taiga |
 | rabbitmq.auth.erlangCookie | string | `"secret-taiga-erlang-cookie"` | Erlang cookie |
 | rabbitmq.auth.password | string | `"taiga"` | RabbitMQ password used by Taiga |
 | rabbitmq.auth.username | string | `"taiga"` | RabbitMQ user used by Taiga |
@@ -79,6 +79,14 @@ A Helm chart for Taiga
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| smtp | object | `{"enabled":false,"from":"","host":"","password":"","port":465,"useSSL":true,"username":""}` | Email settings for Taiga |
+| smtp.enabled | bool | `false` | Enable SMTP backend to send emails |
+| smtp.from | string | `""` | Email address Taiga uses to send emails |
+| smtp.host | string | `""` | SMTP host to connect to |
+| smtp.password | string | `""` | Password for authentication with SMTP server |
+| smtp.port | int | `465` | Port for SMTP connection |
+| smtp.useSSL | bool | `true` | Use ssl for SMTP connection |
+| smtp.username | string | `""` | Username for authentication with SMTP server |
 | tolerations | list | `[]` | Tolerations for Taiga pod |
 
 ## Adding a super user
