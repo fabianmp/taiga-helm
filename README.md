@@ -48,6 +48,7 @@ A Helm chart for Taiga
 | frontend.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | frontend.resources | object | `{}` | Resources for frontend container |
 | fullnameOverride | string | `""` | Override full name of this release |
+| global.image.tag | string | `""` | Overrides the image tag for all containers whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` | Image pull secrets for Taiga pod |
 | ingress.annotations | object | `{}` | Annotations to be added to ingress |
 | ingress.enabled | bool | `false` | Enable ingress for Taiga |

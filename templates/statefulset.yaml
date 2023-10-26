@@ -31,7 +31,7 @@ spec:
       serviceAccountName: {{ include "taiga.serviceAccountName" . }}
       initContainers:
         - name: collect-static
-          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.backend.image.repository }}:{{ coalesce .Values.backend.image.tag .Values.global.image.tag .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.backend.image.pullPolicy }}
           command: [ "python", "manage.py", "collectstatic" ]
           envFrom:
@@ -42,7 +42,7 @@ spec:
               mountPath: /taiga-back/static
       containers:
         - name: backend
-          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.backend.image.repository }}:{{ coalesce .Values.backend.image.tag .Values.global.image.tag .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.backend.image.pullPolicy }}
           envFrom:
             - secretRef:
@@ -85,7 +85,7 @@ spec:
           resources:
             {{- toYaml .Values.backend.resources | nindent 12 }}
         - name: async
-          image: "{{ .Values.async.image.repository }}:{{ .Values.async.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.async.image.repository }}:{{ coalesce .Values.async.image.tag .Values.global.image.tag .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.async.image.pullPolicy }}
           command: [ "/taiga-back/docker/async_entrypoint.sh" ]
           envFrom:
@@ -119,7 +119,7 @@ spec:
           resources:
             {{- toYaml .Values.async.resources | nindent 12 }}
         - name: frontend
-          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.frontend.image.repository }}:{{ coalesce .Values.frontend.image.tag .Values.global.image.tag .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
           envFrom:
             - secretRef:
@@ -158,7 +158,7 @@ spec:
           resources:
             {{- toYaml .Values.frontend.resources | nindent 12 }}
         - name: events
-          image: "{{ .Values.events.image.repository }}:{{ .Values.events.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.events.image.repository }}:{{ coalesce .Values.events.image.tag .Values.global.image.tag .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.events.image.pullPolicy }}
           envFrom:
             - secretRef:
