@@ -1,6 +1,6 @@
 # taiga
 
-![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.4.2](https://img.shields.io/badge/AppVersion-6.4.2-informational?style=flat-square)
+![Version: 0.4.1](https://img.shields.io/badge/Version-0.4.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.4.2](https://img.shields.io/badge/AppVersion-6.4.2-informational?style=flat-square)
 
 A Helm chart for Taiga
 
@@ -79,6 +79,14 @@ A Helm chart for Taiga
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| smtp | object | `{"enabled":false,"from":"","host":"","password":"","port":465,"useSSL":true,"username":""}` | Email settings for Taiga |
+| smtp.enabled | bool | `false` | Enable SMTP backend to send emails |
+| smtp.from | string | `""` | Email address Taiga uses to send emails |
+| smtp.host | string | `""` | SMTP host to connect to |
+| smtp.password | string | `""` | Password for authentication with SMTP server |
+| smtp.port | int | `465` | Port for SMTP connection |
+| smtp.useSSL | bool | `true` | Use ssl for SMTP connection |
+| smtp.username | string | `""` | Username for authentication with SMTP server |
 | tolerations | list | `[]` | Tolerations for Taiga pod |
 
 ## Adding a super user
