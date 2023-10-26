@@ -131,12 +131,13 @@ tolerations: []
 affinity: {}
 
 postgresql:
-  # -- PostgreSQL database name used by Taiga
-  postgresqlDatabase: taiga
-  # -- PostgreSQL user used by Taiga
-  postgresqlUsername: taiga
-  # -- PostgreSQL password used by Taiga
-  postgresqlPassword: taiga
+  auth:
+    # -- PostgreSQL database name used by Taiga
+    database: taiga
+    # -- PostgreSQL user used by Taiga
+    username: taiga
+    # -- PostgreSQL password used by Taiga
+    password: taiga
 
 rabbitmq:
   auth:
