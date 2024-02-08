@@ -1,3 +1,13 @@
+## v0.5.0 (2024-02-08)
+
+### BREAKING CHANGE
+
+- This version cannot be upgraded to from previous versions
+
+### Feat
+
+- Update Taiga to 6.7.1 and update dependencies
+
 ## v0.4.0 (2024-02-08)
 
 ### Feat
