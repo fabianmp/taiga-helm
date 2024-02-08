@@ -110,11 +110,6 @@ ingress:
 persistence:
   # -- Enable persistent storage
   enabled: true
-  static:
-    # -- Size of PVC for static data
-    size: 1Gi
-    # -- Name of storage class for static data PVC
-    storageClass: ""
   media:
     # -- Size of PVC for media
     size: 1Gi

@@ -59,8 +59,6 @@ A Helm chart for Taiga
 | persistence.enabled | bool | `true` | Enable persistent storage |
 | persistence.media.size | string | `"1Gi"` | Size of PVC for media |
 | persistence.media.storageClass | string | `""` | Name of storage class for media PVC |
-| persistence.static.size | string | `"1Gi"` | Size of PVC for static data |
-| persistence.static.storageClass | string | `""` | Name of storage class for static data PVC |
 | podAnnotations | object | `{}` | Annotations to be added to the Taiga pod |
 | postgresql.postgresqlDatabase | string | `"taiga"` | PostgreSQL database name used by Taiga |
 | postgresql.postgresqlPassword | string | `"taiga"` | PostgreSQL password used by Taiga |
