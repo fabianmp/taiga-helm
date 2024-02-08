@@ -23,3 +23,5 @@
 .vscode/
 # Readme template file
 README.md.gotmpl
+# Other files
+.cz.yaml
