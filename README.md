@@ -1,6 +1,6 @@
 # taiga
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.4.2](https://img.shields.io/badge/AppVersion-6.4.2-informational?style=flat-square)
+![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.7.1](https://img.shields.io/badge/AppVersion-6.7.1-informational?style=flat-square)
 
 A Helm chart for Taiga
 
@@ -20,8 +20,8 @@ A Helm chart for Taiga
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | postgresql | 8.6.2 |
-| https://charts.bitnami.com/bitnami | rabbitmq | 8.15.2 |
+| https://charts.bitnami.com/bitnami | postgresql | 14.0.2 |
+| https://charts.bitnami.com/bitnami | rabbitmq | 12.10.0 |
 
 ## Values
 
@@ -39,7 +39,7 @@ A Helm chart for Taiga
 | backend.resources | object | `{}` | Resources for backend container |
 | events.image.pullPolicy | string | `"IfNotPresent"` | Taiga events pull policy |
 | events.image.repository | string | `"taigaio/taiga-events"` | Taiga events image |
-| events.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| events.image.tag | string | `"6.7.0"` | Overrides the image tag whose default is the chart appVersion. |
 | events.resources | object | `{}` | Resources for events container |
 | extraEnv | object | `{}` | Extra environment variables for Taiga containers |
 | frontend.extraEnv | object | `{}` | Extra environment variables for Taiga frontend |
@@ -61,9 +61,11 @@ A Helm chart for Taiga
 | persistence.media.size | string | `"1Gi"` | Size of PVC for media |
 | persistence.media.storageClass | string | `""` | Name of storage class for media PVC |
 | podAnnotations | object | `{}` | Annotations to be added to the Taiga pod |
-| postgresql.postgresqlDatabase | string | `"taiga"` | PostgreSQL database name used by Taiga |
-| postgresql.postgresqlPassword | string | `"taiga"` | PostgreSQL password used by Taiga |
-| postgresql.postgresqlUsername | string | `"taiga"` | PostgreSQL user used by Taiga |
+| postgresql.auth.database | string | `"taiga"` | PostgreSQL database name used by Taiga |
+| postgresql.auth.enablePostgresUser | bool | `false` | PostgreSQL enable postgres admin user |
+| postgresql.auth.password | string | `"taiga"` | PostgreSQL password used by Taiga |
+| postgresql.auth.username | string | `"taiga"` | PostgreSQL user used by Taiga |
+| postgresql.image.tag | string | `"14.10.0-debian-11-r31"` | PostgreSQL version tag |
 | rabbitmq.auth.erlangCookie | string | `"secret-taiga-erlang-cookie"` | Erlang cookie |
 | rabbitmq.auth.password | string | `"taiga"` | RabbitMQ password used by Taiga |
 | rabbitmq.auth.username | string | `"taiga"` | RabbitMQ user used by Taiga |
