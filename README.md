@@ -78,6 +78,15 @@ A Helm chart for Taiga
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| smtp | object | `{"enabled":false,"from":"","host":"","password":"","port":587,"useSsl":false,"useTls":true,"username":""}` | Email settings for Taiga |
+| smtp.enabled | bool | `false` | Enable SMTP backend to send emails |
+| smtp.from | string | `""` | Email address Taiga uses to send emails |
+| smtp.host | string | `""` | SMTP host to connect to |
+| smtp.password | string | `""` | Password for authentication with SMTP server |
+| smtp.port | int | `587` | Port for SMTP connection |
+| smtp.useSsl | bool | `false` | Use SSL for SMTP connection |
+| smtp.useTls | bool | `true` | Use TLS for SMTP connection |
+| smtp.username | string | `""` | Username for authentication with SMTP server |
 | tolerations | list | `[]` | Tolerations for Taiga pod |
 
 ## Adding a super user

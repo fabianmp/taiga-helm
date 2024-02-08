@@ -26,6 +26,25 @@ podAnnotations: {}
 # -- Secret key used for cryptographic signing in Taiga
 secretKey: taiga-secret-key
 
+# -- Email settings for Taiga
+smtp:
+  # -- Enable SMTP backend to send emails
+  enabled: false
+  # -- Email address Taiga uses to send emails
+  from: ""
+  # -- SMTP host to connect to
+  host: ""
+  # -- Port for SMTP connection
+  port: 587
+  # -- Username for authentication with SMTP server
+  username: ""
+  # -- Password for authentication with SMTP server
+  password: ""
+  # -- Use SSL for SMTP connection
+  useSsl: false
+  # -- Use TLS for SMTP connection
+  useTls: true
+
 # -- Number of replicas
 replicaCount: 1
 

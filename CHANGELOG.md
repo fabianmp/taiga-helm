@@ -2,6 +2,7 @@
 
 ### Feat
 
+- Allow to easily configure e-mail settings
 - Allow to set global image tag
 
 ## v0.3.0 (2022-05-03)
