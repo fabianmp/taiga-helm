@@ -1,5 +1,9 @@
 ## Unreleased
 
+### Feat
+
+- Allow to set global image tag
+
 ## v0.3.0 (2022-05-03)
 
 ## v0.2.6 (2022-05-02)
