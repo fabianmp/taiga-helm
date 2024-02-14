@@ -1,3 +1,9 @@
+## v0.6.0 (2024-02-14)
+
+### Feat
+
+- Allow to easily configure OIDC authentication
+
 ## v0.5.0 (2024-02-08)
 
 ### BREAKING CHANGE
