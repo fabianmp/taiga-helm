@@ -26,7 +26,51 @@ podAnnotations: {}
 # -- Secret key used for cryptographic signing in Taiga
 secretKey: taiga-secret-key
 
-# -- Email settings for Taiga
+auth:
+  # -- Enable login form for local users
+  defaultLoginEnabled: true
+  # -- Enable user signup
+  publicRegisterEnabled: true
+  # -- Use host from X-Forwarded-Host header
+  useForwardedHost: true
+  oidc:
+    # -- Enable OIDC authentication
+    enabled: false
+    # -- OIDC provider name
+    name: OIDC
+    # -- OIDC provider logo
+    logo: logo.gif
+    # -- Issuer base url
+    issuer:
+    # -- OAuth client id
+    clientId:
+    # -- OAuth client secret
+    clientSecret:
+    # -- OAuth scopes
+    scopes: openid profile email
+    endpoints:
+      # -- OAuth authorization endpoint
+      authorization:
+      # -- OAuth token endpoint
+      token:
+      # -- OAuth user info endpoint
+      userinfo:
+      # -- OAuth JWKS endpoint
+      jwks:
+    claims:
+      # -- OAuth user id claim
+      authData: sub
+      # -- OAuth e-mail address claim
+      email: email
+      # -- OAuth full name claim
+      fullName: name
+      # -- OAuth preferred username claim
+      userName: preferred_username
+    # -- Key identifying OAuth users
+    authKey: oidc
+    # -- Sluggify username from claim
+    sluggifyUserName: false
+
 smtp:
   # -- Enable SMTP backend to send emails
   enabled: false
@@ -56,7 +100,7 @@ global:
 backend:
   image:
     # -- Taiga backend image
-    repository: taigaio/taiga-back
+    repository: fabianmp/taiga-back
     # -- Taiga backend pull policy
     pullPolicy: IfNotPresent
     # -- Overrides the image tag whose default is the chart appVersion.
@@ -69,7 +113,7 @@ backend:
 frontend:
   image:
     # -- Taiga frontend image
-    repository: taigaio/taiga-front
+    repository: fabianmp/taiga-front
     # -- Taiga frontend pull policy
     pullPolicy: IfNotPresent
     # -- Overrides the image tag whose default is the chart appVersion.

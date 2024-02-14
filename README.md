@@ -1,6 +1,6 @@
 # taiga
 
-![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.7.1](https://img.shields.io/badge/AppVersion-6.7.1-informational?style=flat-square)
+![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.7.1](https://img.shields.io/badge/AppVersion-6.7.1-informational?style=flat-square)
 
 A Helm chart for Taiga
 
@@ -32,9 +32,29 @@ A Helm chart for Taiga
 | async.image.repository | string | `"taigaio/taiga-back"` | Taiga async image |
 | async.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | async.resources | object | `{}` | Resources for async container |
+| auth.defaultLoginEnabled | bool | `true` | Enable login form for local users |
+| auth.oidc.authKey | string | `"oidc"` | Key identifying OAuth users |
+| auth.oidc.claims.authData | string | `"sub"` | OAuth user id claim |
+| auth.oidc.claims.email | string | `"email"` | OAuth e-mail address claim |
+| auth.oidc.claims.fullName | string | `"name"` | OAuth full name claim |
+| auth.oidc.claims.userName | string | `"preferred_username"` | OAuth preferred username claim |
+| auth.oidc.clientId | string | `nil` | OAuth client id |
+| auth.oidc.clientSecret | string | `nil` | OAuth client secret |
+| auth.oidc.enabled | bool | `false` | Enable OIDC authentication |
+| auth.oidc.endpoints.authorization | string | `nil` | OAuth authorization endpoint |
+| auth.oidc.endpoints.jwks | string | `nil` | OAuth JWKS endpoint |
+| auth.oidc.endpoints.token | string | `nil` | OAuth token endpoint |
+| auth.oidc.endpoints.userinfo | string | `nil` | OAuth user info endpoint |
+| auth.oidc.issuer | string | `nil` | Issuer base url |
+| auth.oidc.logo | string | `"logo.gif"` | OIDC provider logo |
+| auth.oidc.name | string | `"OIDC"` | OIDC provider name |
+| auth.oidc.scopes | string | `"openid profile email"` | OAuth scopes |
+| auth.oidc.sluggifyUserName | bool | `false` | Sluggify username from claim |
+| auth.publicRegisterEnabled | bool | `true` | Enable user signup |
+| auth.useForwardedHost | bool | `true` | Use host from X-Forwarded-Host header |
 | backend.extraEnv | object | `{}` | Extra environment variables for Taiga backend |
 | backend.image.pullPolicy | string | `"IfNotPresent"` | Taiga backend pull policy |
-| backend.image.repository | string | `"taigaio/taiga-back"` | Taiga backend image |
+| backend.image.repository | string | `"fabianmp/taiga-back"` | Taiga backend image |
 | backend.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | backend.resources | object | `{}` | Resources for backend container |
 | events.image.pullPolicy | string | `"IfNotPresent"` | Taiga events pull policy |
@@ -44,7 +64,7 @@ A Helm chart for Taiga
 | extraEnv | object | `{}` | Extra environment variables for Taiga containers |
 | frontend.extraEnv | object | `{}` | Extra environment variables for Taiga frontend |
 | frontend.image.pullPolicy | string | `"IfNotPresent"` | Taiga frontend pull policy |
-| frontend.image.repository | string | `"taigaio/taiga-front"` | Taiga frontend image |
+| frontend.image.repository | string | `"fabianmp/taiga-front"` | Taiga frontend image |
 | frontend.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | frontend.resources | object | `{}` | Resources for frontend container |
 | fullnameOverride | string | `""` | Override full name of this release |
@@ -80,7 +100,6 @@ A Helm chart for Taiga
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
-| smtp | object | `{"enabled":false,"from":"","host":"","password":"","port":587,"useSsl":false,"useTls":true,"username":""}` | Email settings for Taiga |
 | smtp.enabled | bool | `false` | Enable SMTP backend to send emails |
 | smtp.from | string | `""` | Email address Taiga uses to send emails |
 | smtp.host | string | `""` | SMTP host to connect to |
