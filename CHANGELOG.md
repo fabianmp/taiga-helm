@@ -1,3 +1,9 @@
+## 0.7.0 (2024-09-03)
+
+### Feat
+
+- Update to 6.8.1 and use custom images
+
 ## v0.6.0 (2024-02-14)
 
 ### Feat
