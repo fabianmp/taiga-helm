@@ -1,6 +1,6 @@
 # taiga
 
-![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.7.1](https://img.shields.io/badge/AppVersion-6.7.1-informational?style=flat-square)
+![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.8.1-fabianmp.0.1.0](https://img.shields.io/badge/AppVersion-6.8.1--fabianmp.0.1.0-informational?style=flat-square)
 
 A Helm chart for Taiga
 
@@ -29,8 +29,8 @@ A Helm chart for Taiga
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity for Taiga pod |
 | async.image.pullPolicy | string | `"IfNotPresent"` | Taiga async pull policy |
-| async.image.repository | string | `"taigaio/taiga-back"` | Taiga async image |
-| async.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| async.image.repository | string | `"fabianmp/taiga-back"` | Taiga async image |
+| async.image.tag | string | `"6.8.1-fabianmp.0.1.0-oidc"` | Overrides the image tag whose default is the chart appVersion. |
 | async.resources | object | `{}` | Resources for async container |
 | auth.defaultLoginEnabled | bool | `true` | Enable login form for local users |
 | auth.oidc.authKey | string | `"oidc"` | Key identifying OAuth users |
@@ -55,7 +55,7 @@ A Helm chart for Taiga
 | backend.extraEnv | object | `{}` | Extra environment variables for Taiga backend |
 | backend.image.pullPolicy | string | `"IfNotPresent"` | Taiga backend pull policy |
 | backend.image.repository | string | `"fabianmp/taiga-back"` | Taiga backend image |
-| backend.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| backend.image.tag | string | `"6.8.1-fabianmp.0.1.0-oidc"` | Overrides the image tag whose default is the chart appVersion. |
 | backend.resources | object | `{}` | Resources for backend container |
 | events.image.pullPolicy | string | `"IfNotPresent"` | Taiga events pull policy |
 | events.image.repository | string | `"taigaio/taiga-events"` | Taiga events image |
@@ -65,7 +65,7 @@ A Helm chart for Taiga
 | frontend.extraEnv | object | `{}` | Extra environment variables for Taiga frontend |
 | frontend.image.pullPolicy | string | `"IfNotPresent"` | Taiga frontend pull policy |
 | frontend.image.repository | string | `"fabianmp/taiga-front"` | Taiga frontend image |
-| frontend.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| frontend.image.tag | string | `"6.8.1-fabianmp.0.1.0-oidc"` | Overrides the image tag whose default is the chart appVersion. |
 | frontend.resources | object | `{}` | Resources for frontend container |
 | fullnameOverride | string | `""` | Override full name of this release |
 | global.image.tag | string | `""` | Overrides the image tag for all containers whose default is the chart appVersion. |

@@ -104,7 +104,7 @@ backend:
     # -- Taiga backend pull policy
     pullPolicy: IfNotPresent
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: ""
+    tag: 6.8.1-fabianmp.0.1.0-oidc
   # -- Resources for backend container
   resources: {}
   # -- Extra environment variables for Taiga backend
@@ -117,7 +117,7 @@ frontend:
     # -- Taiga frontend pull policy
     pullPolicy: IfNotPresent
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: ""
+    tag: 6.8.1-fabianmp.0.1.0-oidc
   # -- Resources for frontend container
   resources: {}
   # -- Extra environment variables for Taiga frontend
@@ -137,11 +137,11 @@ events:
 async:
   image:
     # -- Taiga async image
-    repository: taigaio/taiga-back
+    repository: fabianmp/taiga-back
     # -- Taiga async pull policy
     pullPolicy: IfNotPresent
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: ""
+    tag: 6.8.1-fabianmp.0.1.0-oidc
   # -- Resources for async container
   resources: {}
 
